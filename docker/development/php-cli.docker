@@ -1,0 +1,9 @@
+FROM php:8.1-cli
+
+RUN apt-get update && apt-get install -y libmcrypt-dev zlib1g-dev libpq-dev wget ffmpeg \
+    && docker-php-ext-install bcmath sockets \
+    && docker-php-ext-enable sockets
+
+RUN wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/bin --filename=composer --quiet
+
+WORKDIR /app

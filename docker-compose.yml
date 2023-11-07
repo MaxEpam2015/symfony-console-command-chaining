@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: ./docker/development
+      dockerfile: nginx.docker
+    volumes:
+      - ./:/app
+    depends_on:
+      - php-fpm
+    ports:
+      - "8080:80"
+
+  php-fpm:
+    container_name: php-fpm
+#    depends_on:
+#      - rabbitmq
+#      - database
+    build:
+      context: ./docker/development
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./:/app
+  php-cli:
+    container_name: php-cli
+#    depends_on:
+#      - rabbitmq
+    build:
+      context: ./docker/development
+      dockerfile: php-cli.docker
+    volumes:
+      - ./:/app
+    working_dir: /app
+    tty: true
